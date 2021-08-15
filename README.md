@@ -2,6 +2,8 @@
 
 An [Dio](https://pub.dev/packages/dio) interceptor which logs HTTP request and response data.
 
+[![pub package](https://img.shields.io/pub/v/dio_logging_interceptor.svg)](https://pub.dartlang.org/packages/dio_logging_interceptor)
+
 ## Usage:
 
 ```dart
