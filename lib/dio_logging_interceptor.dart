@@ -174,6 +174,34 @@ class DioLoggingInterceptor extends Interceptor {
 
     logPrint('[DIO]<-- HTTP FAILED: $err');
 
+    if (level == Level.basic) return handler.next(err);
+
+    err.response?.headers.forEach((key, value) {
+      logPrint('[DIO][HEADER]$key:$value');
+    });
+
+    if (level == Level.headers) {
+      logPrint('[DIO]--> END HTTP');
+      return handler.next(err);
+    }
+
+    final data = err.response?.data;
+    if (data != null) {
+      // logPrint('[DIO]dataType:${data.runtimeType}');
+      if (data is Map) {
+        if (compact) {
+          logPrint('[DIO][DATA]$data');
+        } else {
+          _prettyPrintJson(data);
+        }
+      } else if (data is List) {
+        // NOT IMPLEMENT
+      } else {
+        logPrint('[DIO][DATA]${data.toString()}');
+      }
+    }
+
+    logPrint('[DIO]<-- END HTTP');
     return handler.next(err);
   }
 
